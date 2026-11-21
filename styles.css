@@ -210,6 +210,9 @@ a { color: inherit; }
 
 .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr)); gap: clamp(1.4rem, 3vw, 2.4rem) clamp(1.4rem, 3vw, 2.6rem); padding-top: 12px; }
 .piece { margin: 0; padding: 12px 12px 0; min-width: 0; }
+/* the rest of the tattoos wait behind "View more tattoos" */
+.gallery:not(.show-more) .piece[data-more] { display: none; }
+.more-wrap { display: flex; justify-content: center; padding-top: clamp(2.4rem, 5vw, 3.6rem); }
 .port .frame { aspect-ratio: 3/4; }
 .piece:hover .frame { transform: translateY(-4px); }
 .piece:hover .frame::before { opacity: 1; }

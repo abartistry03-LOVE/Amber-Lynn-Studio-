@@ -8,7 +8,19 @@
       var f = b.dataset.f;
       btns.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
       pieces.forEach(function (p) { p.hidden = !(f === 'all' || p.dataset.cat === f); });
+      moreWrap.hidden = !(f === 'all' || f === 'tattoo');
     });
+  });
+
+  // ---------- best tattoos first; the rest appear on request ----------
+  var gallery = document.querySelector('.gallery');
+  var moreBtn = document.getElementById('more-tattoos');
+  var moreWrap = moreBtn.parentNode;
+  moreBtn.addEventListener('click', function () {
+    var open = gallery.classList.toggle('show-more');
+    moreBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    moreBtn.textContent = open ? 'Show fewer tattoos' : 'View more tattoos';
+    if (!open) document.getElementById('work').scrollIntoView({ behavior: 'smooth' });
   });
 
   // ---------- gallery videos: stay still for visitors who prefer reduced motion ----------
@@ -21,7 +33,7 @@
   var lbVid = document.getElementById('lb-vid');
   var lbTitle = document.getElementById('lb-title'), lbLabel = document.getElementById('lb-label'), lbStory = document.getElementById('lb-story');
   var current = null, opener = null;
-  function zoomables() { return Array.prototype.filter.call(document.querySelectorAll('.zoom'), function (z) { return !z.closest('.piece').hidden; }); }
+  function zoomables() { return Array.prototype.filter.call(document.querySelectorAll('.zoom'), function (z) { var p = z.closest('.piece'); return !p.hidden && getComputedStyle(p).display !== 'none'; }); }
   function show(z) {
     current = z;
     var fig = z.closest('figure'), media = z.querySelector('video');
